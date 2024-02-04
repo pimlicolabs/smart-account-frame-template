@@ -2,7 +2,7 @@ import { FrameRequest, getFrameMessage } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { privateKeyToSafeSmartAccount } from 'permissionless/accounts';
 import { createPimlicoPaymasterClient } from 'permissionless/clients/pimlico';
-import { Address, Hash, createPublicClient, hexToBigInt, http } from 'viem';
+import { Address, Hash, createPublicClient, http } from 'viem';
 
 const privateKey = process.env.PRIVATE_KEY!;
 const apiKey = process.env.PIMLICO_API_KEY!;
@@ -36,7 +36,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         privateKey: privateKey as Hash,
         safeVersion: "1.4.1", // simple version
         entryPoint: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789", // global entrypoint
-        saltNonce: hexToBigInt(accountAddress)
+        saltNonce: BigInt(message.interactor.fid)
     })
 
     return NextResponse.redirect(

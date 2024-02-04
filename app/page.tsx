@@ -13,10 +13,10 @@ const frameMetadata = getFrameMetadata({
 });
 
 export const metadata: Metadata = {
-  title: 'zizzamia.xyz',
+  title: 'Smart Account Frame Template',
   description: 'LFG',
   openGraph: {
-    title: 'zizzamia.xyz',
+    title: 'Smart Account Frame Templatess',
     description: 'LFG',
     images: [`${NEXT_PUBLIC_URL}/main.png`],
   },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1>zizzamia.xyz</h1>
+      <h1>Smart Account Frame Template</h1>
     </>
   );
 }
