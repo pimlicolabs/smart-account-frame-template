@@ -28,7 +28,7 @@ export async function GET(request: Request) {
           style={{
             height: '100%',
             width: '100%',
-            display: "flex",
+            display: 'flex',
             flexDirection: 'column',
             // alignItems: 'center',
             // justifyContent: 'center',
@@ -41,8 +41,8 @@ export async function GET(request: Request) {
             gap: "30px"
           }}
         >
-          <div>Smart Account Address: {address.slice(0, 6)}...{address.slice(38)}</div>
-          <div>FID: {fid}</div>
+          <div style={{ display: 'flex' }}>Smart Account Address: {address}</div>
+          <div style={{ display: 'flex' }}>FID: {fid}</div>
         </div>
       ),
       {
