@@ -1,10 +1,11 @@
 import { FrameRequest, getFrameHtmlResponse, getFrameMessage } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
+import { Address } from 'viem';
 
 const NEXT_PUBLIC_URL = 'https://zizzamia.xyz';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-    let accountAddress: string | undefined = '';
+    let accountAddress: Address | undefined;
     let text: string | undefined = '';
 
     const body: FrameRequest = await req.json();
@@ -14,7 +15,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const { isValid, message } = await getFrameMessage(body, { neynarApiKey: process.env.NEYNAR_API_KEY! });
 
     if (isValid) {
-        accountAddress = message.interactor.verified_accounts[0];
+        accountAddress = message.interactor.verified_accounts[0] as Address;
     }
 
 
@@ -22,7 +23,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         getFrameHtmlResponse({
             buttons: [
                 {
-                    label: `Text ${accountAddress}`,
+                    label: `https://etherscan.io/address/${accountAddress}`,
                 },
             ],
             image: `${NEXT_PUBLIC_URL}/park-2.png`,
