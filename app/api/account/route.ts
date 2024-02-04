@@ -57,14 +57,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     
     console.log(gasPrices)
 
-    const txHash = await smartAccountClient.sendTransaction({
+    smartAccountClient.sendTransaction({
         to: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
         data: "0x1234",
         maxFeePerGas: gasPrices.fast.maxFeePerGas,
         maxPriorityFeePerGas: gasPrices.fast.maxPriorityFeePerGas,
     })
 
-    console.log(txHash)
+    await new Promise((resolve) => setTimeout(resolve, 1000))
 
     return new NextResponse(
         getFrameHtmlResponse({
