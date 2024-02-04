@@ -22,7 +22,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         getFrameHtmlResponse({
             buttons: [
                 {
-                    label: `Text ${message?.interactor.custody_address}`,
+                    label: `Text ${accountAddress}`,
                 },
             ],
             image: `${NEXT_PUBLIC_URL}/park-2.png`,
