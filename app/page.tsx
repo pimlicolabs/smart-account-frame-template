@@ -5,7 +5,7 @@ import { NEXT_PUBLIC_URL } from './config';
 const frameMetadata = getFrameMetadata({
   buttons: [
     {
-      label: 'Send Transaction'
+      label: 'Deploy Smart Account'
     }
   ],
   image: `${NEXT_PUBLIC_URL}/main.png`,
