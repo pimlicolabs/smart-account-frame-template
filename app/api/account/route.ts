@@ -1,4 +1,4 @@
-import { FrameRequest, getFrameMessage } from '@coinbase/onchainkit';
+import { FrameRequest, getFrameHtmlResponse, getFrameMessage } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { bundlerActions, createSmartAccountClient } from 'permissionless';
 import { privateKeyToSafeSmartAccount } from 'permissionless/accounts';
@@ -62,8 +62,19 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         maxPriorityFeePerGas: gasPrices.fast.maxPriorityFeePerGas,
     })
 
-        
-
+    return new NextResponse(
+        getFrameHtmlResponse({
+            buttons: [
+                {
+                    label: `View Smart Account`,
+                    action: "post_redirect"
+                },
+            ],
+            image: `${NEXT_PUBLIC_URL}/main.png`,
+            post_url: `${NEXT_PUBLIC_URL}/api/etherscan`,
+        }),
+    );
+    
 
 
 }
