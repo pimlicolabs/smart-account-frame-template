@@ -9,9 +9,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     let text: string | undefined = '';
 
     const body: FrameRequest = await req.json();
-
-    console.log("body", body)
-
     const { isValid, message } = await getFrameMessage(body, { neynarApiKey: process.env.NEYNAR_API_KEY! });
 
     if (isValid) {
@@ -23,7 +20,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         getFrameHtmlResponse({
             buttons: [
                 {
-                    label: `https://etherscan.io/address/${accountAddress}`,
+                    label: `Etherscan`,
                     action: "post_redirect"
                 },
             ],
