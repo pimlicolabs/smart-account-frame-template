@@ -44,6 +44,7 @@ export async function GET(request: Request) {
           <div style={{ display: 'flex' }}>Smart Account Address: {address}</div>
           <div style={{ display: 'flex' }}>FID: {fid}</div>
           <div style={{ display: 'flex' }}>Your smart account has been deployed (might take a minute to show up as indexed on Etherscan)</div>
+          <div style={{ display: 'flex' }}>Source code: https://github.com/pimlicolabs/smart-account-frame-template</div>
         </div>
       ),
       {
