@@ -5,14 +5,11 @@ import { NEXT_PUBLIC_URL } from './config';
 const frameMetadata = getFrameMetadata({
   buttons: [
     {
-      label: 'Click Me',
-    },
+      label: 'Send Transaction'
+    }
   ],
-  image: `${NEXT_PUBLIC_URL}/park-1.png`,
-  input: {
-    text: 'Tell me a boat story',
-  },
-  post_url: `${NEXT_PUBLIC_URL}/api/frame`,
+  image: `${NEXT_PUBLIC_URL}/main.png`,
+  post_url: `${NEXT_PUBLIC_URL}/api/account`,
 });
 
 export const metadata: Metadata = {
@@ -21,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'zizzamia.xyz',
     description: 'LFG',
-    images: [`${NEXT_PUBLIC_URL}/park-1.png`],
+    images: [`${NEXT_PUBLIC_URL}/main.png`],
   },
   other: {
     ...frameMetadata,
