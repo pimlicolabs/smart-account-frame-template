@@ -1,4 +1,4 @@
-import { FrameRequest, getFrameHtmlResponse, getFrameMessage } from '@coinbase/onchainkit';
+import { FrameRequest, getFrameMessage } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { bundlerActions, createSmartAccountClient } from 'permissionless';
 import { privateKeyToSafeSmartAccount } from 'permissionless/accounts';
@@ -22,8 +22,6 @@ const paymasterClient = createPimlicoPaymasterClient({
 	transport: http(paymasterUrl),
 })
 
-
-
 export async function POST(req: NextRequest): Promise<NextResponse> {
     const body: FrameRequest = await req.json();
     const { isValid, message } = await getFrameMessage(body, { neynarApiKey: process.env.NEYNAR_API_KEY! });
@@ -38,60 +36,36 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const accountAddress = message.interactor.verified_accounts[0] as Address;
 
-    if (message.button === 0) {
-        // send transaction
-        const account = await privateKeyToSafeSmartAccount(publicClient, {
-            privateKey: privateKey as Address,
-            safeVersion: "1.4.1", // simple version
-            entryPoint: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789", // global entrypoint
-            saltNonce: hexToBigInt(accountAddress)
-        })
+    // send transaction
+    const account = await privateKeyToSafeSmartAccount(publicClient, {
+        privateKey: privateKey as Address,
+        safeVersion: "1.4.1", // simple version
+        entryPoint: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789", // global entrypoint
+        saltNonce: hexToBigInt(accountAddress)
+    })
 
-        const smartAccountClient = createSmartAccountClient({
-            account,
-            chain: sepolia,
-            transport: http(bundlerUrl),
-            sponsorUserOperation: paymasterClient.sponsorUserOperation,
-        })
-            .extend(bundlerActions)
-            .extend(pimlicoBundlerActions)
-         
-        const gasPrices = await smartAccountClient.getUserOperationGasPrice()    
+    const smartAccountClient = createSmartAccountClient({
+        account,
+        chain: sepolia,
+        transport: http(bundlerUrl),
+        sponsorUserOperation: paymasterClient.sponsorUserOperation,
+    })
+        .extend(bundlerActions)
+        .extend(pimlicoBundlerActions)
         
-        smartAccountClient.sendTransaction({
-            to: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
-            data: "0x1234",
-            maxFeePerGas: gasPrices.fast.maxFeePerGas,
-            maxPriorityFeePerGas: gasPrices.fast.maxPriorityFeePerGas,
-        })
+    const gasPrices = await smartAccountClient.getUserOperationGasPrice()    
+    
+    smartAccountClient.sendTransaction({
+        to: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+        data: "0x1234",
+        maxFeePerGas: gasPrices.fast.maxFeePerGas,
+        maxPriorityFeePerGas: gasPrices.fast.maxPriorityFeePerGas,
+    })
 
-        return new NextResponse(
-            getFrameHtmlResponse({
-                buttons: [
-                    {
-                        label: `View Smart Account`,
-                        action: "post_redirect"
-                    },
-                ],
-                image: `${NEXT_PUBLIC_URL}/main.png`,
-                post_url: `${NEXT_PUBLIC_URL}/api/etherscan`,
-            }),
-        );
-    }
+        
 
 
-    return new NextResponse(
-        getFrameHtmlResponse({
-            buttons: [
-                {
-                    label: `Transact`,
-                    action: "post"
-                },
-            ],
-            image: `${NEXT_PUBLIC_URL}/main.png`,
-            post_url: `${NEXT_PUBLIC_URL}/api/frame`,
-        }),
-    );
+
 }
   
 
