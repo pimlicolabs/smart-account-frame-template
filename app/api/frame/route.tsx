@@ -7,24 +7,22 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     let accountAddress: string | undefined = '';
     let text: string | undefined = '';
 
-    console.log('req', req)
-
     const body: FrameRequest = await req.json();
+
+    console.log("body", body)
+
     const { isValid, message } = await getFrameMessage(body, { neynarApiKey: process.env.NEYNAR_API_KEY! });
 
     if (isValid) {
         accountAddress = message.interactor.verified_accounts[0];
     }
 
-    if (body?.untrustedData?.inputText) {
-        text = body.untrustedData.inputText;
-    }
 
     return new NextResponse(
         getFrameHtmlResponse({
             buttons: [
                 {
-                    label: `Text: ${text}`,
+                    label: `Text`,
                 },
             ],
             image: `${NEXT_PUBLIC_URL}/park-2.png`,
