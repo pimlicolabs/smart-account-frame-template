@@ -3,7 +3,7 @@ import { FrameRequest, getFrameHtmlResponse, getFrameMessage } from '@coinbase/o
 import { NextRequest, NextResponse } from 'next/server';
 import { createPimlicoPaymasterClient } from 'permissionless/clients/pimlico';
 import { createPublicClient, http } from 'viem';
-';
+
 
 const privateKey = process.env.PRIVATE_KEY!;
 const apiKey = process.env.PIMLICO_API_KEY!;
