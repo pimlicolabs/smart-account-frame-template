@@ -24,6 +24,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             buttons: [
                 {
                     label: `https://etherscan.io/address/${accountAddress}`,
+                    action: "post_redirectss"
                 },
             ],
             image: `${NEXT_PUBLIC_URL}/park-2.png`,
