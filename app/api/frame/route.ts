@@ -27,7 +27,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
                     action: "post_redirect"
                 },
             ],
-            image: `${NEXT_PUBLIC_URL}/park-2.png`
+            image: `${NEXT_PUBLIC_URL}/park-2.png`,
+            post_url: `${NEXT_PUBLIC_URL}/api/frame-redirect`,
         }),
     );
 }
