@@ -4,10 +4,10 @@ import { NextRequest, NextResponse } from 'next/server';
 const NEXT_PUBLIC_URL = 'https://zizzamia.xyz';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-
-    console.log(req.body)
     let accountAddress: string | undefined = '';
     let text: string | undefined = '';
+
+    console.log('req', req)
 
     const body: FrameRequest = await req.json();
     const { isValid, message } = await getFrameMessage(body, { neynarApiKey: process.env.NEYNAR_API_KEY! });
