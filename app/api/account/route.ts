@@ -1,9 +1,9 @@
+import { NEXT_PUBLIC_URL } from '@/app/config';
 import { FrameRequest, getFrameHtmlResponse, getFrameMessage } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { createPimlicoPaymasterClient } from 'permissionless/clients/pimlico';
 import { createPublicClient, http } from 'viem';
-
-const NEXT_PUBLIC_URL = 'https://zizzamia.xyz';
+';
 
 const privateKey = process.env.PRIVATE_KEY!;
 const apiKey = process.env.PIMLICO_API_KEY!;
