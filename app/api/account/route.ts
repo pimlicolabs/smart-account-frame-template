@@ -53,16 +53,26 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         .extend(bundlerActions)
         .extend(pimlicoBundlerActions)
         
-    const gasPrices = await smartAccountClient.getUserOperationGasPrice()    
-    
-    smartAccountClient.sendTransaction({
-        to: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+    const gasPrices = await smartAccountClient.getUserOperationGasPrice()
+
+    const callData = await account.encodeCallData({ 
+        to: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045", 
         data: "0x1234",
-        maxFeePerGas: gasPrices.fast.maxFeePerGas,
-        maxPriorityFeePerGas: gasPrices.fast.maxPriorityFeePerGas,
+        value: BigInt(0) 
     })
 
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    const userOperation = await smartAccountClient.prepareUserOperationRequest({
+        userOperation: {
+            callData
+        },
+    })
+
+    userOperation.signature = await account.signUserOperation(userOperation)
+
+    const userOpHash = await smartAccountClient.sendUserOperation({
+        userOperation,
+        entryPoint: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789"
+    })
 
     return new NextResponse(
         getFrameHtmlResponse({
@@ -72,7 +82,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                     action: "post_redirect"
                 },
             ],
-            image: `${NEXT_PUBLIC_URL}/api/og?address=${account.address}&fid=${message.interactor.fid}`,
+            image: `${NEXT_PUBLIC_URL}/api/og?address=${account.address}&fid=${message.interactor.fid}&userOpHash=${userOpHash}`,
             post_url: `${NEXT_PUBLIC_URL}/api/etherscan`,
         }),
     );

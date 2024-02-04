@@ -10,6 +10,7 @@ export async function GET(request: Request) {
     // const logo = searchParams.get('logo');
     // const logo = "https://docs-og-pimlico.vercel.app/pimlico-purple.svg"
     // const logo = "./pimlico-purple.svg"
+    const userOpHash = searchParams.get('userOpHash');
     const address = searchParams.get('address');
     const fid = searchParams.get('fid');
 
@@ -42,6 +43,7 @@ export async function GET(request: Request) {
             gap: "30px"
           }}
         >
+          <div style={{ display: 'flex' }}>User Operation hash: {userOpHash}</div>
           <div style={{ display: 'flex' }}>Smart Account Address: {address}</div>
           <div style={{ display: 'flex' }}>FID: {fid}</div>
           <div style={{ display: 'flex' }}>Your smart account has been deployed (might take a minute to show up as indexed on Etherscan)</div>
