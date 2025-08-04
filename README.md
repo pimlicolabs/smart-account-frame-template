@@ -1,3 +1,6 @@
+> [!NOTE]
+> This repo is using a outdated version of permissionless.js. At the time of writing, it is recommended to use permissionless.js@^0.2.52, if you need any help migrating, please reach out to the Pimlico team.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
